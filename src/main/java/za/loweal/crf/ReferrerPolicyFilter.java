@@ -15,21 +15,21 @@ import org.slf4j.LoggerFactory;
 public class ReferrerPolicyFilter implements Filter 
 {
     private static final Logger logger = LoggerFactory.getLogger(ReferrerPolicyFilter.class);
-    public static final String REFERRER_HEADER = "Referrer-Policy";
-    public static final String REFERRER_DEFAULT = "'no-referrer-when-downgrade'";
+    public static final String REFERRER_POLICY = "Referrer-Policy";
+    public static final String REFERRER_POLICY_DEFAULT = "'no-referrer-when-downgrade'";
 
-    private String referrer;
+    private String referrerPolicy;
     
 
     public void init(FilterConfig filterConfig) throws ServletException {
-        referrer = getParameterValue(filterConfig, REFERRER_HEADER, REFERRER_DEFAULT);
+        referrerPolicy = getParameterValue(filterConfig, REFERRER_POLICY, REFERRER_POLICY_DEFAULT);
 	}
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
         
-                logger.debug("Adding Header {} = {}", REFERRER_HEADER, referrer);
-                httpResponse.addHeader(REFERRER_HEADER, referrer);
+                logger.debug("Adding Header {} = {}", REFERRER_POLICY, referrerPolicy);
+                httpResponse.addHeader(REFERRER_POLICY, referrerPolicy);
         
                 chain.doFilter(request, response);
     }
